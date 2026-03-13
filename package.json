@@ -1,0 +1,56 @@
+{
+  "name": "@chevp/components",
+  "version": "0.1.0",
+  "description": "Reusable Vanilla Web Components for workspace-based business applications",
+  "type": "module",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": "./dist/index.js",
+    "./panel": "./dist/components/panel/chevp-panel.js",
+    "./profile-card": "./dist/components/profile-card/chevp-profile-card.js",
+    "./timeline": "./dist/components/timeline/chevp-timeline.js",
+    "./doc-editor": "./dist/components/doc-editor/chevp-doc-editor.js",
+    "./data-table": "./dist/components/data-table/chevp-data-table.js",
+    "./task-list": "./dist/components/task-list/chevp-task-list.js",
+    "./schedule": "./dist/components/schedule/chevp-schedule.js",
+    "./stat-card": "./dist/components/stat-card/chevp-stat-card.js",
+    "./bar-chart": "./dist/components/bar-chart/chevp-bar-chart.js",
+    "./badge": "./dist/components/badge/chevp-badge.js",
+    "./workspace": "./dist/components/workspace/chevp-workspace.js",
+    "./md": "./dist/index-md.js",
+    "./md/badge": "./dist/components-md/badge/chevp-md-badge.js",
+    "./md/panel": "./dist/components-md/panel/chevp-md-panel.js",
+    "./md/stat-card": "./dist/components-md/stat-card/chevp-md-stat-card.js",
+    "./md/data-table": "./dist/components-md/data-table/chevp-md-data-table.js",
+    "./md/task-list": "./dist/components-md/task-list/chevp-md-task-list.js",
+    "./md/workspace": "./dist/components-md/workspace/chevp-md-workspace.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "clean": "rm -rf dist",
+    "prepublishOnly": "npm run clean && npm run build"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/chevp/chevp-components.git"
+  },
+  "author": "chevp",
+  "license": "UNLICENSED",
+  "private": false,
+  "devDependencies": {
+    "typescript": "^5.7.0"
+  },
+  "dependencies": {
+    "@material/web": "^2.4.1"
+  }
+}
