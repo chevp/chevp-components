@@ -6,13 +6,24 @@
   <title>@chevp/components — Vanilla Demo</title>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <!-- Prevent light-mode flash: set dark defaults before modules load -->
+  <style id="fouc-guard">
+    :root {
+      --chevp-bg: #0f1117;
+      --chevp-text: #e4e6ed;
+      --chevp-surface: #1a1d27;
+      --chevp-border: #2e3344;
+      --chevp-sidebar-bg: #1a1d27;
+      --chevp-sidebar-text: #b2bec3;
+    }
+  </style>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
       font-family: 'Inter', system-ui, sans-serif;
-      background: var(--chevp-bg, #f8f9fa);
-      color: var(--chevp-text, #212631);
+      background: var(--chevp-bg);
+      color: var(--chevp-text);
       display: flex;
       height: 100vh;
       overflow: hidden;
@@ -454,6 +465,8 @@
     const base = isDark ? darkTheme : lightTheme;
     const palette = colorPalettes[currentPalette] || paletteCobalt;
     document.adoptedStyleSheets = [base, palette];
+    // Remove FOUC guard once real tokens are active
+    document.getElementById('fouc-guard')?.remove();
   }
   applyTheme();
 
