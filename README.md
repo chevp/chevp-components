@@ -8,8 +8,26 @@ Two component variants are included:
 
 ## Installation
 
+This package is hosted on **GitHub Packages**, not npmjs.com.
+
+**1. Configure your `.npmrc`** (once per project or globally):
+
 ```bash
-npm install @chevp/components --registry=https://npm.pkg.github.com
+echo "@chevp:registry=https://npm.pkg.github.com" >> .npmrc
+```
+
+**2. Authenticate** (once per machine):
+
+```bash
+npm login --registry=https://npm.pkg.github.com
+```
+
+Use your GitHub username and a **Personal Access Token** (with `read:packages` scope) as password.
+
+**3. Install:**
+
+```bash
+npm install @chevp/components
 ```
 
 ## Components
