@@ -163,7 +163,7 @@
 
   <div class="theme-bar">
     <label class="theme-toggle">
-      <input type="checkbox" id="dark-toggle">
+      <input type="checkbox" id="dark-toggle" checked>
       <div class="track"></div>
       <span>Dark Mode</span>
     </label>
@@ -447,7 +447,7 @@
     colorPalettes,
   } from '../dist/index.js';
 
-  let isDark = false;
+  let isDark = true;
   let currentPalette = 'cobalt';
 
   function applyTheme() {

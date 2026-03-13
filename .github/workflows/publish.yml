@@ -81,26 +81,7 @@ jobs:
           cp -r node_modules/tslib _site/node_modules/tslib
           cat > _site/index.html << 'HTMLEOF'
           <!DOCTYPE html>
-          <html lang="en">
-          <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>@chevp/components — Demo</title>
-            <style>
-              body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f8f9fa; }
-              .links { text-align: center; }
-              .links h1 { font-size: 24px; margin-bottom: 24px; }
-              .links a { display: block; margin: 12px 0; font-size: 18px; color: #321fdb; }
-            </style>
-          </head>
-          <body>
-            <div class="links">
-              <h1>@chevp/components</h1>
-              <a href="docs/demo-material.html">Material Design Demo</a>
-              <a href="docs/demo-vanilla.html">Vanilla Demo</a>
-            </div>
-          </body>
-          </html>
+          <html><head><meta http-equiv="refresh" content="0;url=docs/demo-material.html"></head></html>
           HTMLEOF
 
       - uses: actions/configure-pages@v5

@@ -218,7 +218,7 @@
 
   <div class="theme-bar">
     <label class="theme-toggle">
-      <input type="checkbox" id="dark-toggle">
+      <input type="checkbox" id="dark-toggle" checked>
       <div class="track"></div>
       <span>Dark Mode</span>
     </label>
@@ -564,7 +564,7 @@ document.adoptedStyleSheets = [darkTheme, paletteCobalt, mdTokens];</pre>
   } from '../dist/index.js';
   import { mdTokens } from '../dist/index-md.js';
 
-  let isDark = false;
+  let isDark = true;
   let currentPalette = 'cobalt';
 
   function applyTheme() {
