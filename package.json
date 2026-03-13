@@ -51,7 +51,7 @@
     "url": "https://github.com/chevp/chevp-components.git"
   },
   "author": "chevp",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": false,
   "devDependencies": {
     "typescript": "^5.7.0"

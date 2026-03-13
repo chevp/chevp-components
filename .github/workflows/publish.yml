@@ -10,6 +10,12 @@ on:
 permissions:
   contents: read
   packages: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
 
 jobs:
   build:
@@ -42,3 +48,66 @@ jobs:
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  deploy-pages:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          registry-url: https://npm.pkg.github.com
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Prepare Pages site
+        run: |
+          mkdir -p _site/docs _site/dist _site/node_modules
+          cp docs/*.html _site/docs/
+          cp -r dist/* _site/dist/
+          cp -r node_modules/@material _site/node_modules/@material
+          cp -r node_modules/lit _site/node_modules/lit
+          cp -r node_modules/lit-html _site/node_modules/lit-html
+          cp -r node_modules/lit-element _site/node_modules/lit-element
+          cp -r node_modules/@lit _site/node_modules/@lit
+          cp -r node_modules/@lit-labs _site/node_modules/@lit-labs
+          cp -r node_modules/tslib _site/node_modules/tslib
+          cat > _site/index.html << 'HTMLEOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>@chevp/components — Demo</title>
+            <style>
+              body { font-family: system-ui, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; background: #f8f9fa; }
+              .links { text-align: center; }
+              .links h1 { font-size: 24px; margin-bottom: 24px; }
+              .links a { display: block; margin: 12px 0; font-size: 18px; color: #321fdb; }
+            </style>
+          </head>
+          <body>
+            <div class="links">
+              <h1>@chevp/components</h1>
+              <a href="docs/demo-material.html">Material Design Demo</a>
+              <a href="docs/demo-vanilla.html">Vanilla Demo</a>
+            </div>
+          </body>
+          </html>
+          HTMLEOF
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+      - id: deployment
+        uses: actions/deploy-pages@v4
