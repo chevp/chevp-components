@@ -28,12 +28,18 @@
     "./md/stat-card": "./dist/components-md/stat-card/chevp-md-stat-card.js",
     "./md/data-table": "./dist/components-md/data-table/chevp-md-data-table.js",
     "./md/task-list": "./dist/components-md/task-list/chevp-md-task-list.js",
+    "./md/profile-card": "./dist/components-md/profile-card/chevp-md-profile-card.js",
+    "./md/timeline": "./dist/components-md/timeline/chevp-md-timeline.js",
+    "./md/schedule": "./dist/components-md/schedule/chevp-md-schedule.js",
+    "./md/doc-editor": "./dist/components-md/doc-editor/chevp-md-doc-editor.js",
+    "./md/bar-chart": "./dist/components-md/bar-chart/chevp-md-bar-chart.js",
     "./md/workspace": "./dist/components-md/workspace/chevp-md-workspace.js"
   },
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
     "test": "web-test-runner test/**/*.test.js --node-resolve",
+    "docs": "npx serve . -l 3000 --no-clipboard",
     "clean": "rm -rf dist",
     "prepublishOnly": "npm run clean && npm run build"
   },
