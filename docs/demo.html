@@ -4,6 +4,24 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>@chevp/components — Unified Demo</title>
+  <script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "../node_modules/@material/web/",
+        "lit": "../node_modules/lit/index.js",
+        "lit/": "../node_modules/lit/",
+        "lit-html": "../node_modules/lit-html/lit-html.js",
+        "lit-html/": "../node_modules/lit-html/",
+        "lit-element/": "../node_modules/lit-element/",
+        "lit-element/lit-element.js": "../node_modules/lit-element/lit-element.js",
+        "@lit/reactive-element": "../node_modules/@lit/reactive-element/reactive-element.js",
+        "@lit/reactive-element/": "../node_modules/@lit/reactive-element/",
+        "@lit-labs/ssr-dom-shim": "../node_modules/@lit-labs/ssr-dom-shim/index.js",
+        "@lit-labs/ssr-dom-shim/": "../node_modules/@lit-labs/ssr-dom-shim/",
+        "tslib": "../node_modules/tslib/tslib.es6.mjs"
+      }
+    }
+  </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
   <style id="fouc-guard">
@@ -353,6 +371,17 @@
 <script type="module">
   import { configure, applyTheme } from '../dist/configure.js';
 
+  // ── Navigation (register immediately, independent of component loading) ──
+  document.querySelectorAll('.nav-item[data-target]').forEach(item => {
+    item.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+      document.querySelectorAll('.component-section').forEach(s => s.classList.remove('active'));
+      item.classList.add('active');
+      document.getElementById('sec-' + item.dataset.target)?.classList.add('active');
+    });
+  });
+
   // Read initial settings from URL params or defaults
   const params = new URLSearchParams(location.search);
   let currentTheme = params.get('theme') || 'vanilla';
@@ -363,16 +392,6 @@
   document.getElementById('theme-select').value = currentTheme;
   document.getElementById('dark-toggle').checked = isDark;
   document.getElementById('palette-select').value = currentPalette;
-
-  // Configure once — registers components + applies tokens
-  await configure({
-    theme: currentTheme,
-    mode: isDark ? 'dark' : 'light',
-    palette: currentPalette,
-  });
-
-  // Remove FOUC guard
-  document.getElementById('fouc-guard')?.remove();
 
   // Theme select — requires reload (components can only be registered once)
   document.getElementById('theme-select').addEventListener('change', (e) => {
@@ -398,18 +417,29 @@
     applyTheme({ mode: isDark ? 'dark' : 'light', palette: currentPalette, material: currentTheme === 'material' });
   });
 
-  // Navigation
-  document.querySelectorAll('.nav-item[data-target]').forEach(item => {
-    item.addEventListener('click', () => {
-      document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-      document.querySelectorAll('.component-section').forEach(s => s.classList.remove('active'));
-      item.classList.add('active');
-      document.getElementById('sec-' + item.dataset.target)?.classList.add('active');
+  // ── Configure components (may fail for material on Pages without importmap) ──
+  try {
+    await configure({
+      theme: currentTheme,
+      mode: isDark ? 'dark' : 'light',
+      palette: currentPalette,
     });
-  });
+  } catch (err) {
+    console.warn('Component configure failed:', err);
+    // Fallback to vanilla if material failed
+    if (currentTheme === 'material') {
+      try {
+        await configure({ theme: 'vanilla', mode: isDark ? 'dark' : 'light', palette: currentPalette });
+        document.getElementById('theme-select').value = 'vanilla';
+      } catch (e2) { console.error('Fallback also failed:', e2); }
+    }
+  }
+
+  // Remove FOUC guard
+  document.getElementById('fouc-guard')?.remove();
 
   // Populate data components
-  document.getElementById('demo-table').setData(
+  document.getElementById('demo-table')?.setData(
     [
       { key: 'name', label: 'Name', width: '30%' },
       { key: 'role', label: 'Role', width: '30%' },
@@ -423,14 +453,14 @@
     ]
   );
 
-  document.getElementById('demo-tasks').setTasks([
+  document.getElementById('demo-tasks')?.setTasks([
     { id: '1', text: 'Review pull request #142', done: false, due: 'Today', priority: 'high' },
     { id: '2', text: 'Update API documentation', done: true, due: 'Yesterday', priority: 'medium' },
     { id: '3', text: 'Fix login redirect bug', done: false, due: 'Tomorrow', priority: 'high' },
     { id: '4', text: 'Add unit tests for auth module', done: false, due: 'Friday', priority: 'low' },
   ]);
 
-  document.getElementById('demo-chart').setData([
+  document.getElementById('demo-chart')?.setData([
     { label: 'Mon', value: 42 },
     { label: 'Tue', value: 65 },
     { label: 'Wed', value: 53, highlight: true },
@@ -440,7 +470,7 @@
     { label: 'Sun', value: 15 },
   ]);
 
-  document.getElementById('demo-schedule').setDays([
+  document.getElementById('demo-schedule')?.setDays([
     { label: 'Monday', slots: [
       { time: '09:00', text: 'Standup' },
       { time: '11:00', text: 'Architecture Review' },
