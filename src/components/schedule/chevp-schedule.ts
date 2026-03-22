@@ -60,5 +60,3 @@ export class ChevpSchedule extends ChevpBaseComponent {
     `).join('');
   }
 }
-
-customElements.define('chevp-schedule', ChevpSchedule);

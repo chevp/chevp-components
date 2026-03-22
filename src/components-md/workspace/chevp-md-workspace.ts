@@ -67,5 +67,3 @@ export class ChevpMdWorkspace extends ChevpMdBaseComponent {
     this.root.innerHTML = `<div class="grid" style="${style}"><slot></slot></div>`;
   }
 }
-
-customElements.define('chevp-md-workspace', ChevpMdWorkspace);

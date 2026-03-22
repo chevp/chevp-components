@@ -72,6 +72,3 @@ export class ChevpTimelineItem extends ChevpBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-timeline', ChevpTimeline);
-customElements.define('chevp-timeline-item', ChevpTimelineItem);

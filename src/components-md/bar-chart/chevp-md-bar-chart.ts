@@ -73,5 +73,3 @@ export class ChevpMdBarChart extends ChevpMdBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-md-bar-chart', ChevpMdBarChart);

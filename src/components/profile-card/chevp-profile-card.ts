@@ -57,5 +57,3 @@ export class ChevpProfileCard extends ChevpBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-profile-card', ChevpProfileCard);

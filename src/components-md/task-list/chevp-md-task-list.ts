@@ -93,5 +93,3 @@ export class ChevpMdTaskList extends ChevpMdBaseComponent {
     });
   }
 }
-
-customElements.define('chevp-md-task-list', ChevpMdTaskList);

@@ -43,5 +43,3 @@ export class ChevpMdBadge extends ChevpMdBaseComponent {
     this.root.innerHTML = `<span class="badge ${variant}"><slot></slot></span>`;
   }
 }
-
-customElements.define('chevp-md-badge', ChevpMdBadge);

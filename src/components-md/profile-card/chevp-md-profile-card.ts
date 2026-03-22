@@ -75,5 +75,3 @@ export class ChevpMdProfileCard extends ChevpMdBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-md-profile-card', ChevpMdProfileCard);

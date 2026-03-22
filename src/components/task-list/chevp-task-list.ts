@@ -80,5 +80,3 @@ export class ChevpTaskList extends ChevpBaseComponent {
     });
   }
 }
-
-customElements.define('chevp-task-list', ChevpTaskList);

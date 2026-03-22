@@ -54,5 +54,3 @@ export class ChevpStatCard extends ChevpBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-stat-card', ChevpStatCard);

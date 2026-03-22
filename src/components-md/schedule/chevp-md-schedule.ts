@@ -72,5 +72,3 @@ export class ChevpMdSchedule extends ChevpMdBaseComponent {
     `).join('');
   }
 }
-
-customElements.define('chevp-md-schedule', ChevpMdSchedule);

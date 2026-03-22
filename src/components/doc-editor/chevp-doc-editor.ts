@@ -84,5 +84,3 @@ export class ChevpDocEditor extends ChevpBaseComponent {
     if (editor) editor.innerHTML = html;
   }
 }
-
-customElements.define('chevp-doc-editor', ChevpDocEditor);

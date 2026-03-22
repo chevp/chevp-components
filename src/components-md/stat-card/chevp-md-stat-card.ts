@@ -61,5 +61,3 @@ export class ChevpMdStatCard extends ChevpMdBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-md-stat-card', ChevpMdStatCard);

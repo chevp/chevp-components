@@ -109,5 +109,3 @@ export class ChevpMdDocEditor extends ChevpMdBaseComponent {
     if (editor) editor.innerHTML = html;
   }
 }
-
-customElements.define('chevp-md-doc-editor', ChevpMdDocEditor);

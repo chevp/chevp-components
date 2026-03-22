@@ -10,13 +10,13 @@ export class ChevpMdTimeline extends ChevpMdBaseComponent {
     super();
     this.addStyles(`
       :host { display: block; }
-      ::slotted(chevp-md-timeline-item) {
+      ::slotted(chevp-timeline-item) {
         display: flex;
         gap: 12px;
         padding: 12px 0;
         border-bottom: 1px solid var(--md-sys-color-outline-variant);
       }
-      ::slotted(chevp-md-timeline-item:last-child) { border-bottom: none; }
+      ::slotted(chevp-timeline-item:last-child) { border-bottom: none; }
     `);
     this.root.innerHTML = `<slot></slot>`;
   }
@@ -79,6 +79,3 @@ export class ChevpMdTimelineItem extends ChevpMdBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-md-timeline', ChevpMdTimeline);
-customElements.define('chevp-md-timeline-item', ChevpMdTimelineItem);

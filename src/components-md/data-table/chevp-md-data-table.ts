@@ -83,5 +83,3 @@ export class ChevpMdDataTable extends ChevpMdBaseComponent {
     });
   }
 }
-
-customElements.define('chevp-md-data-table', ChevpMdDataTable);

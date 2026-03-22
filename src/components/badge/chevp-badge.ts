@@ -37,5 +37,3 @@ export class ChevpBadge extends ChevpBaseComponent {
     this.root.innerHTML = `<span class="badge ${variant}"><slot></slot></span>`;
   }
 }
-
-customElements.define('chevp-badge', ChevpBadge);

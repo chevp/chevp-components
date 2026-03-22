@@ -11,6 +11,9 @@
   ],
   "exports": {
     ".": "./dist/index.js",
+    "./configure": "./dist/configure.js",
+    "./register-vanilla": "./dist/register-vanilla.js",
+    "./register-material": "./dist/register-material.js",
     "./panel": "./dist/components/panel/chevp-panel.js",
     "./profile-card": "./dist/components/profile-card/chevp-profile-card.js",
     "./timeline": "./dist/components/timeline/chevp-timeline.js",

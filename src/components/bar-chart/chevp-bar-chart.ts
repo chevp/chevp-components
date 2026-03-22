@@ -55,5 +55,3 @@ export class ChevpBarChart extends ChevpBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-bar-chart', ChevpBarChart);

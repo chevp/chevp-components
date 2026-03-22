@@ -84,5 +84,3 @@ export class ChevpMdPanel extends ChevpMdBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-md-panel', ChevpMdPanel);

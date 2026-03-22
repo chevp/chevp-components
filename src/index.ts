@@ -1,3 +1,7 @@
+// Configuration
+export { configure, applyTheme } from './configure.js';
+export type { ChevpConfig, ChevpTheme, ChevpMode, ChevpPalette } from './configure.js';
+
 // Styles
 export {
   tokens,
@@ -13,10 +17,14 @@ export {
   colorPalettes,
 } from './styles/tokens.js';
 
+// MD3 Token Bridge
+export { mdTokens } from './styles/md-tokens.js';
+
 // Base
 export { ChevpBaseComponent } from './utils/base-component.js';
+export { ChevpMdBaseComponent } from './utils/md-base-component.js';
 
-// Components
+// Vanilla Components
 export { ChevpBadge } from './components/badge/chevp-badge.js';
 export { ChevpPanel } from './components/panel/chevp-panel.js';
 export { ChevpProfileCard } from './components/profile-card/chevp-profile-card.js';
@@ -32,3 +40,16 @@ export type { TableColumn } from './components/data-table/chevp-data-table.js';
 export { ChevpBarChart } from './components/bar-chart/chevp-bar-chart.js';
 export type { BarChartData } from './components/bar-chart/chevp-bar-chart.js';
 export { ChevpWorkspace } from './components/workspace/chevp-workspace.js';
+
+// Material Components
+export { ChevpMdBadge } from './components-md/badge/chevp-md-badge.js';
+export { ChevpMdPanel } from './components-md/panel/chevp-md-panel.js';
+export { ChevpMdStatCard } from './components-md/stat-card/chevp-md-stat-card.js';
+export { ChevpMdDataTable } from './components-md/data-table/chevp-md-data-table.js';
+export { ChevpMdTaskList } from './components-md/task-list/chevp-md-task-list.js';
+export { ChevpMdProfileCard } from './components-md/profile-card/chevp-md-profile-card.js';
+export { ChevpMdTimeline, ChevpMdTimelineItem } from './components-md/timeline/chevp-md-timeline.js';
+export { ChevpMdSchedule } from './components-md/schedule/chevp-md-schedule.js';
+export { ChevpMdDocEditor } from './components-md/doc-editor/chevp-md-doc-editor.js';
+export { ChevpMdBarChart } from './components-md/bar-chart/chevp-md-bar-chart.js';
+export { ChevpMdWorkspace } from './components-md/workspace/chevp-md-workspace.js';

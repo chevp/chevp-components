@@ -73,5 +73,3 @@ export class ChevpPanel extends ChevpBaseComponent {
     `;
   }
 }
-
-customElements.define('chevp-panel', ChevpPanel);
