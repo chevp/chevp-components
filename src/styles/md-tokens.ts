@@ -59,11 +59,13 @@ mdTokens.replaceSync(`
     font-family: 'Material Symbols Outlined';
     font-weight: normal;
     font-style: normal;
-    font-size: 24px;
+    font-size: inherit;
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
