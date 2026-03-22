@@ -56,10 +56,11 @@
       padding: 10px 16px; margin: 2px 8px; border-radius: 8px;
       font-size: 13px; cursor: pointer; transition: all 0.15s;
       text-decoration: none; color: inherit;
+      position: relative; z-index: 1;
     }
     .nav-item:hover { background: rgba(255,255,255,0.05); color: #fff; }
     .nav-item.active { background: rgba(255,255,255,0.1); color: #fff; font-weight: 500; }
-    .nav-item .material-symbols-outlined { font-size: 18px; }
+    .nav-item .material-symbols-outlined { font-size: 18px; pointer-events: none; }
 
     .theme-bar {
       padding: 16px;
@@ -71,7 +72,15 @@
     .theme-bar select {
       width: 100%; padding: 6px 8px; border-radius: 6px;
       border: 1px solid rgba(255,255,255,0.1);
-      background: rgba(255,255,255,0.05); color: #fff; font-size: 12px;
+      background: #1e2130; color: #e4e6ed; font-size: 12px;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%238b8fa3' d='M3 5l3 3 3-3'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 8px center;
+      padding-right: 24px;
+    }
+    .theme-bar select option {
+      background: #1e2130; color: #e4e6ed;
     }
     .theme-toggle {
       display: flex; align-items: center; gap: 8px;
@@ -128,16 +137,6 @@
     .demo-grid { display: grid; gap: 16px; }
     .demo-grid-3 { grid-template-columns: 1fr 1fr 1fr; }
 
-    .reload-notice {
-      background: var(--chevp-orange-bg, rgba(249,177,21,0.1));
-      color: var(--chevp-orange, #f9b115);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      display: none;
-      margin-bottom: 10px;
-    }
-    .reload-notice.visible { display: block; }
   </style>
 </head>
 <body>
@@ -162,7 +161,6 @@
   <a class="nav-item" data-target="workspace"><span class="material-symbols-outlined">grid_view</span> Workspace</a>
 
   <div class="theme-bar">
-    <div id="reload-notice" class="reload-notice">Theme changed — reload page to apply</div>
     <div>
       <label>Component Theme</label>
       <select id="theme-select">
@@ -170,11 +168,6 @@
         <option value="material">Material Design 3</option>
       </select>
     </div>
-    <label class="theme-toggle">
-      <input type="checkbox" id="dark-toggle" checked>
-      <div class="track"></div>
-      <span>Dark Mode</span>
-    </label>
     <div>
       <label>Color Palette</label>
       <select id="palette-select">
@@ -187,6 +180,11 @@
         <option value="neon">Neon</option>
       </select>
     </div>
+    <label class="theme-toggle">
+      <input type="checkbox" id="dark-toggle" checked>
+      <div class="track"></div>
+      <span>Dark Mode</span>
+    </label>
   </div>
 </aside>
 
