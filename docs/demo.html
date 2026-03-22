@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@chevp/components — Demo</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--chevp-bg, #0f1117);
+      color: var(--chevp-text, #e4e6ed);
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      width: 260px;
+      background: var(--chevp-surface, #1a1d27);
+      border-right: 1px solid var(--chevp-border, #2e3344);
+      display: flex;
+      flex-direction: column;
+      flex-shrink: 0;
+      overflow-y: auto;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--chevp-border); border-radius: 2px; }
+    .sidebar-header {
+      padding: 24px 20px 16px;
+      border-bottom: 1px solid var(--chevp-border, #2e3344);
+    }
+    .sidebar-header h1 { font-size: 15px; font-weight: 700; }
+    .sidebar-header p { font-size: 11px; color: var(--chevp-text-muted, #8b8fa3); margin-top: 2px; }
+    .sidebar-section { padding: 12px 12px 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--chevp-text-dim, #5c6078); }
+    .sidebar a {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; margin: 2px 8px; border-radius: 8px;
+      font-size: 13px; color: var(--chevp-text-muted, #8b8fa3);
+      text-decoration: none; transition: all 0.15s;
+    }
+    .sidebar a:hover { background: var(--chevp-surface-2, #232733); color: var(--chevp-text, #e4e6ed); }
+    .sidebar a.active { background: var(--chevp-accent-bg, rgba(50,31,219,0.08)); color: var(--chevp-accent-light, #6e5fe6); font-weight: 500; }
+    .sidebar a .material-symbols-outlined { font-size: 18px; }
+
+    /* ── Main ── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      background: var(--chevp-bg, #0f1117);
+    }
+    .main::-webkit-scrollbar { width: 6px; }
+    .main::-webkit-scrollbar-thumb { background: var(--chevp-border); border-radius: 3px; }
+
+    /* ── Topbar ── */
+    .topbar {
+      position: sticky; top: 0; z-index: 10;
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 32px;
+      background: var(--chevp-surface, #1a1d27);
+      border-bottom: 1px solid var(--chevp-border, #2e3344);
+    }
+    .topbar select {
+      padding: 6px 10px; border-radius: 6px; font-size: 12px;
+      border: 1px solid var(--chevp-border, #2e3344);
+      background: var(--chevp-surface-2, #232733);
+      color: var(--chevp-text, #e4e6ed);
+      cursor: pointer;
+    }
+    .topbar label { font-size: 12px; color: var(--chevp-text-muted); }
+
+    /* ── Content ── */
+    .content { padding: 32px; max-width: 1100px; }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.2s ease;
+    }
+    .section.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+    .section h2 {
+      font-size: 22px; font-weight: 700; margin-bottom: 4px;
+    }
+    .section .subtitle {
+      font-size: 13px; color: var(--chevp-text-muted); margin-bottom: 24px;
+    }
+    .section h3 {
+      font-size: 14px; font-weight: 600; margin: 24px 0 12px;
+      color: var(--chevp-text-muted);
+    }
+
+    /* Demo box */
+    .demo-box {
+      background: var(--chevp-surface, #1a1d27);
+      border: 1px solid var(--chevp-border, #2e3344);
+      border-radius: 10px;
+      padding: 24px;
+      margin-bottom: 16px;
+    }
+    .demo-row { display: flex; gap: 12px; flex-wrap: wrap; align-items: flex-start; }
+
+    /* Code block */
+    .code-block {
+      background: var(--chevp-surface-2, #232733);
+      border: 1px solid var(--chevp-border, #2e3344);
+      border-radius: 8px;
+      padding: 16px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      line-height: 1.6;
+      color: var(--chevp-text-muted);
+      white-space: pre;
+    }
+    .code-block .tag { color: #7c3aed; }
+    .code-block .attr { color: #22d3ee; }
+    .code-block .str { color: #34d399; }
+    .code-block .comment { color: var(--chevp-text-dim); }
+
+    /* Palette swatches */
+    .palette-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+    }
+    .palette-swatch {
+      border-radius: 10px;
+      padding: 16px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
+      border: 2px solid transparent;
+    }
+    .palette-swatch:hover { transform: translateY(-2px); }
+    .palette-swatch.active { border-color: var(--chevp-text); }
+  </style>
+</head>
+<body>
+
+<!-- ═══ Sidebar ═══ -->
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <h1>@chevp/components</h1>
+    <p>v0.1.0 &mdash; Web Components Library</p>
+  </div>
+
+  <div class="sidebar-section">Getting Started</div>
+  <a href="#themes" data-section="themes" class="active">
+    <span class="material-symbols-outlined">palette</span> Themes &amp; Palettes
+  </a>
+
+  <div class="sidebar-section">Components</div>
+  <a href="#badge" data-section="badge"><span class="material-symbols-outlined">label</span> Badge</a>
+  <a href="#panel" data-section="panel"><span class="material-symbols-outlined">dashboard</span> Panel</a>
+  <a href="#stat-card" data-section="stat-card"><span class="material-symbols-outlined">monitoring</span> Stat Card</a>
+  <a href="#profile-card" data-section="profile-card"><span class="material-symbols-outlined">person</span> Profile Card</a>
+  <a href="#data-table" data-section="data-table"><span class="material-symbols-outlined">table</span> Data Table</a>
+  <a href="#task-list" data-section="task-list"><span class="material-symbols-outlined">checklist</span> Task List</a>
+  <a href="#timeline" data-section="timeline"><span class="material-symbols-outlined">timeline</span> Timeline</a>
+  <a href="#schedule" data-section="schedule"><span class="material-symbols-outlined">calendar_month</span> Schedule</a>
+  <a href="#bar-chart" data-section="bar-chart"><span class="material-symbols-outlined">bar_chart</span> Bar Chart</a>
+  <a href="#doc-editor" data-section="doc-editor"><span class="material-symbols-outlined">edit_note</span> Doc Editor</a>
+  <a href="#workspace" data-section="workspace"><span class="material-symbols-outlined">grid_view</span> Workspace</a>
+</nav>
+
+<!-- ═══ Main ═══ -->
+<div class="main">
+  <div class="topbar">
+    <label>Theme:</label>
+    <select id="themeSelect">
+      <option value="dark" selected>Dark</option>
+      <option value="light">Light</option>
+    </select>
+    <label>Palette:</label>
+    <select id="paletteSelect">
+      <option value="cobalt" selected>Cobalt</option>
+      <option value="ocean">Ocean</option>
+      <option value="forest">Forest</option>
+      <option value="ember">Ember</option>
+      <option value="rose">Rose</option>
+      <option value="slate">Slate</option>
+      <option value="neon">Neon</option>
+    </select>
+    <label>Variant:</label>
+    <select id="variantSelect">
+      <option value="vanilla" selected>Vanilla</option>
+      <option value="material">Material Design 3</option>
+    </select>
+  </div>
+
+  <div class="content">
+
+    <!-- ═══ THEMES ═══ -->
+    <div class="section active" id="sec-themes">
+      <h2>Themes &amp; Palettes</h2>
+      <p class="subtitle">2 base themes &times; 7 color palettes = 14 combinations. Click a swatch to preview.</p>
+
+      <h3>Color Palettes</h3>
+      <div class="palette-grid" id="paletteGrid"></div>
+
+      <h3>Usage</h3>
+      <div class="code-block"><span class="comment">// Apply theme + palette</span>
+<span class="tag">import</span> { darkTheme, paletteCobalt } <span class="tag">from</span> <span class="str">'@chevp/components'</span>;
+document.adoptedStyleSheets = [darkTheme, paletteCobalt];</div>
+    </div>
+
+    <!-- ═══ BADGE ═══ -->
+    <div class="section" id="sec-badge">
+      <h2>Badge</h2>
+      <p class="subtitle">Status badge with color variants.</p>
+
+      <h3>Variants</h3>
+      <div class="demo-box">
+        <div class="demo-row" id="badge-demo"></div>
+      </div>
+      <div class="code-block">&lt;<span class="tag">chevp-badge</span> <span class="attr">variant</span>=<span class="str">"green"</span>&gt;Active&lt;/<span class="tag">chevp-badge</span>&gt;
+&lt;<span class="tag">chevp-badge</span> <span class="attr">variant</span>=<span class="str">"orange"</span>&gt;Pending&lt;/<span class="tag">chevp-badge</span>&gt;
+&lt;<span class="tag">chevp-badge</span> <span class="attr">variant</span>=<span class="str">"red"</span>&gt;Critical&lt;/<span class="tag">chevp-badge</span>&gt;
+&lt;<span class="tag">chevp-badge</span> <span class="attr">variant</span>=<span class="str">"blue"</span>&gt;Info&lt;/<span class="tag">chevp-badge</span>&gt;
+&lt;<span class="tag">chevp-badge</span> <span class="attr">variant</span>=<span class="str">"purple"</span>&gt;New&lt;/<span class="tag">chevp-badge</span>&gt;</div>
+    </div>
+
+    <!-- ═══ PANEL ═══ -->
+    <div class="section" id="sec-panel">
+      <h2>Panel</h2>
+      <p class="subtitle">Container with header, icon, and action slot.</p>
+
+      <h3>Basic</h3>
+      <div class="demo-box" id="panel-demo" style="height:220px"></div>
+      <div class="code-block">&lt;<span class="tag">chevp-panel</span> <span class="attr">heading</span>=<span class="str">"Tasks"</span> <span class="attr">icon</span>=<span class="str">"checklist"</span>&gt;
+  Panel body content here.
+&lt;/<span class="tag">chevp-panel</span>&gt;</div>
+    </div>
+
+    <!-- ═══ STAT CARD ═══ -->
+    <div class="section" id="sec-stat-card">
+      <h2>Stat Card</h2>
+      <p class="subtitle">Statistics display with label, value, and trend.</p>
+
+      <h3>Variations</h3>
+      <div class="demo-box">
+        <div class="demo-row" id="stat-card-demo" style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;"></div>
+      </div>
+      <div class="code-block">&lt;<span class="tag">chevp-stat-card</span>
+  <span class="attr">label</span>=<span class="str">"Revenue"</span>
+  <span class="attr">value</span>=<span class="str">"$48,200"</span>
+  <span class="attr">trend</span>=<span class="str">"+12.5% from last month"</span>
+&gt;&lt;/<span class="tag">chevp-stat-card</span>&gt;</div>
+    </div>
+
+    <!-- ═══ PROFILE CARD ═══ -->
+    <div class="section" id="sec-profile-card">
+      <h2>Profile Card</h2>
+      <p class="subtitle">User profile display with avatar, name, and tags.</p>
+
+      <h3>Basic</h3>
+      <div class="demo-box">
+        <div class="demo-row" id="profile-card-demo" style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;"></div>
+      </div>
+      <div class="code-block">&lt;<span class="tag">chevp-profile-card</span>
+  <span class="attr">name</span>=<span class="str">"Alice Chen"</span>
+  <span class="attr">subtitle</span>=<span class="str">"Senior Engineer"</span>
+  <span class="attr">color</span>=<span class="str">"var(--chevp-accent)"</span>
+&gt;
+  &lt;<span class="tag">chevp-badge</span> <span class="attr">slot</span>=<span class="str">"tags"</span> <span class="attr">variant</span>=<span class="str">"blue"</span>&gt;Frontend&lt;/<span class="tag">chevp-badge</span>&gt;
+&lt;/<span class="tag">chevp-profile-card</span>&gt;</div>
+    </div>
+
+    <!-- ═══ DATA TABLE ═══ -->
+    <div class="section" id="sec-data-table">
+      <h2>Data Table</h2>
+      <p class="subtitle">Configurable table with clickable rows.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="data-table-demo"></div>
+      <div class="code-block"><span class="tag">const</span> table = document.querySelector(<span class="str">'chevp-data-table'</span>);
+table.setData(
+  [{ key: <span class="str">'name'</span>, label: <span class="str">'Name'</span> }, { key: <span class="str">'role'</span>, label: <span class="str">'Role'</span> }],
+  [{ name: <span class="str">'Alice'</span>, role: <span class="str">'Engineer'</span> }]
+);
+table.addEventListener(<span class="str">'chevp:row-clicked'</span>, e =&gt; console.log(e.detail));</div>
+    </div>
+
+    <!-- ═══ TASK LIST ═══ -->
+    <div class="section" id="sec-task-list">
+      <h2>Task List</h2>
+      <p class="subtitle">Interactive checklist with priority indicators.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="task-list-demo"></div>
+      <div class="code-block"><span class="tag">const</span> list = document.querySelector(<span class="str">'chevp-task-list'</span>);
+list.setTasks([
+  { id: <span class="str">'1'</span>, text: <span class="str">'Review PR #42'</span>, done: false, priority: <span class="str">'high'</span> },
+  { id: <span class="str">'2'</span>, text: <span class="str">'Update docs'</span>, done: true, priority: <span class="str">'low'</span> },
+]);
+list.addEventListener(<span class="str">'chevp:task-toggled'</span>, e =&gt; console.log(e.detail));</div>
+    </div>
+
+    <!-- ═══ TIMELINE ═══ -->
+    <div class="section" id="sec-timeline">
+      <h2>Timeline</h2>
+      <p class="subtitle">Chronological activity feed.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="timeline-demo"></div>
+      <div class="code-block">&lt;<span class="tag">chevp-timeline</span>&gt;
+  &lt;<span class="tag">chevp-timeline-item</span>
+    <span class="attr">icon</span>=<span class="str">"check_circle"</span>
+    <span class="attr">icon-bg</span>=<span class="str">"var(--chevp-green-bg)"</span>
+    <span class="attr">icon-color</span>=<span class="str">"var(--chevp-green)"</span>
+    <span class="attr">time</span>=<span class="str">"2 hours ago"</span>
+  &gt;Deployment successful&lt;/<span class="tag">chevp-timeline-item</span>&gt;
+&lt;/<span class="tag">chevp-timeline</span>&gt;</div>
+    </div>
+
+    <!-- ═══ SCHEDULE ═══ -->
+    <div class="section" id="sec-schedule">
+      <h2>Schedule</h2>
+      <p class="subtitle">Day-based schedule with time slots.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="schedule-demo"></div>
+      <div class="code-block"><span class="tag">const</span> schedule = document.querySelector(<span class="str">'chevp-schedule'</span>);
+schedule.setDays([
+  { label: <span class="str">'Monday'</span>, slots: [
+    { time: <span class="str">'09:00'</span>, text: <span class="str">'Standup'</span> },
+    { time: <span class="str">'14:00'</span>, text: <span class="str">'Code Review'</span>, muted: true },
+  ]},
+]);</div>
+    </div>
+
+    <!-- ═══ BAR CHART ═══ -->
+    <div class="section" id="sec-bar-chart">
+      <h2>Bar Chart</h2>
+      <p class="subtitle">Simple vertical bar chart visualization.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="bar-chart-demo"></div>
+      <div class="code-block"><span class="tag">const</span> chart = document.querySelector(<span class="str">'chevp-bar-chart'</span>);
+chart.setData([
+  { label: <span class="str">'Mon'</span>, value: 45 },
+  { label: <span class="str">'Tue'</span>, value: 72, highlight: true },
+  { label: <span class="str">'Wed'</span>, value: 58 },
+]);</div>
+    </div>
+
+    <!-- ═══ DOC EDITOR ═══ -->
+    <div class="section" id="sec-doc-editor">
+      <h2>Doc Editor</h2>
+      <p class="subtitle">Rich text WYSIWYG editor with toolbar.</p>
+
+      <h3>Example</h3>
+      <div class="demo-box" id="doc-editor-demo" style="height:280px"></div>
+      <div class="code-block">&lt;<span class="tag">chevp-doc-editor</span> <span class="attr">placeholder</span>=<span class="str">"Start writing..."</span>&gt;&lt;/<span class="tag">chevp-doc-editor</span>&gt;
+
+<span class="comment">// Get/set content</span>
+<span class="tag">const</span> editor = document.querySelector(<span class="str">'chevp-doc-editor'</span>);
+editor.setContent(<span class="str">'&lt;p&gt;Hello World&lt;/p&gt;'</span>);
+editor.addEventListener(<span class="str">'chevp:doc-changed'</span>, e =&gt; console.log(e.detail.html));</div>
+    </div>
+
+    <!-- ═══ WORKSPACE ═══ -->
+    <div class="section" id="sec-workspace">
+      <h2>Workspace</h2>
+      <p class="subtitle">CSS Grid layout container for panels.</p>
+
+      <h3>2-Column Layout</h3>
+      <div class="demo-box" id="workspace-demo" style="height:300px"></div>
+      <div class="code-block">&lt;<span class="tag">chevp-workspace</span> <span class="attr">layout</span>=<span class="str">"2col"</span>&gt;
+  &lt;<span class="tag">chevp-panel</span> <span class="attr">heading</span>=<span class="str">"Left"</span> <span class="attr">icon</span>=<span class="str">"dashboard"</span>&gt;...&lt;/<span class="tag">chevp-panel</span>&gt;
+  &lt;<span class="tag">chevp-panel</span> <span class="attr">heading</span>=<span class="str">"Right"</span> <span class="attr">icon</span>=<span class="str">"analytics"</span>&gt;...&lt;/<span class="tag">chevp-panel</span>&gt;
+&lt;/<span class="tag">chevp-workspace</span>&gt;
+
+<span class="comment">// Preset layouts: "2col", "3col", "sidebar-main", "main-sidebar"</span></div>
+    </div>
+
+  </div><!-- /content -->
+</div><!-- /main -->
+
+<!-- ═══ Import Map for @material/web ═══ -->
+<script type="importmap">
+{
+  "imports": {
+    "@material/web/": "../node_modules/@material/web/",
+    "lit": "../node_modules/lit/index.js",
+    "lit/": "../node_modules/lit/",
+    "lit-html": "../node_modules/lit-html/lit-html.js",
+    "lit-html/": "../node_modules/lit-html/",
+    "lit-element": "../node_modules/lit-element/lit-element.js",
+    "lit-element/": "../node_modules/lit-element/",
+    "@lit/reactive-element": "../node_modules/@lit/reactive-element/reactive-element.js",
+    "@lit/reactive-element/": "../node_modules/@lit/reactive-element/",
+    "@lit-labs/observers/": "../node_modules/@lit-labs/observers/",
+    "tslib": "../node_modules/tslib/tslib.es6.js"
+  }
+}
+</script>
+
+<script type="module">
+  // ── Import library ──
+  import {
+    lightTheme, darkTheme,
+    paletteCobalt, paletteOcean, paletteForest, paletteEmber, paletteRose, paletteSlate, paletteNeon,
+    colorPalettes,
+  } from '../dist/index.js';
+
+  // Vanilla components (imported for side-effects: custom element registration)
+  import '../dist/index.js';
+
+  // MD components
+  import { mdTokens } from '../dist/index-md.js';
+  import '../dist/index-md.js';
+
+  // ── State ──
+  const themes = { dark: darkTheme, light: lightTheme };
+  const palettes = { cobalt: paletteCobalt, ocean: paletteOcean, forest: paletteForest, ember: paletteEmber, rose: paletteRose, slate: paletteSlate, neon: paletteNeon };
+  const paletteColors = {
+    cobalt: '#321fdb', ocean: '#0891b2', forest: '#059669',
+    ember: '#d97706', rose: '#e11d48', slate: '#475569', neon: '#7c3aed',
+  };
+
+  let currentTheme = 'dark';
+  let currentPalette = 'cobalt';
+  let currentVariant = 'vanilla';
+
+  function applyTheme() {
+    const sheets = [themes[currentTheme], palettes[currentPalette]];
+    if (currentVariant === 'material') sheets.push(mdTokens);
+    document.adoptedStyleSheets = sheets;
+  }
+  applyTheme();
+
+  // ── Theme controls ──
+  document.getElementById('themeSelect').addEventListener('change', e => { currentTheme = e.target.value; applyTheme(); });
+  document.getElementById('paletteSelect').addEventListener('change', e => {
+    currentPalette = e.target.value;
+    applyTheme();
+    renderPaletteGrid();
+  });
+  document.getElementById('variantSelect').addEventListener('change', e => {
+    currentVariant = e.target.value;
+    applyTheme();
+    renderAllDemos();
+  });
+
+  // ── Sidebar navigation ──
+  const links = document.querySelectorAll('.sidebar a[data-section]');
+  const sections = document.querySelectorAll('.section');
+
+  function showSection(id) {
+    sections.forEach(s => s.classList.remove('active'));
+    links.forEach(a => a.classList.remove('active'));
+    const sec = document.getElementById('sec-' + id);
+    const link = document.querySelector(`a[data-section="${id}"]`);
+    if (sec) sec.classList.add('active');
+    if (link) link.classList.add('active');
+  }
+
+  links.forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      showSection(a.dataset.section);
+    });
+  });
+
+  // ── Palette grid ──
+  function renderPaletteGrid() {
+    const grid = document.getElementById('paletteGrid');
+    grid.innerHTML = Object.entries(paletteColors).map(([name, color]) => `
+      <div class="palette-swatch ${name === currentPalette ? 'active' : ''}"
+           style="background:${color}; color:#fff;"
+           data-palette="${name}">
+        ${name.charAt(0).toUpperCase() + name.slice(1)}
+      </div>
+    `).join('');
+    grid.querySelectorAll('.palette-swatch').forEach(s => {
+      s.addEventListener('click', () => {
+        currentPalette = s.dataset.palette;
+        document.getElementById('paletteSelect').value = currentPalette;
+        applyTheme();
+        renderPaletteGrid();
+      });
+    });
+  }
+  renderPaletteGrid();
+
+  // ── Tag helper ──
+  function tag(name) {
+    if (currentVariant === 'material') {
+      if (name === 'chevp-timeline-item') return 'chevp-md-timeline-item';
+      return name.replace('chevp-', 'chevp-md-');
+    }
+    return name;
+  }
+
+  // ── Render all demos ──
+  function renderAllDemos() {
+    renderBadges();
+    renderPanel();
+    renderStatCards();
+    renderProfileCards();
+    renderDataTable();
+    renderTaskList();
+    renderTimeline();
+    renderSchedule();
+    renderBarChart();
+    renderDocEditor();
+    renderWorkspace();
+  }
+
+  function renderBadges() {
+    const el = document.getElementById('badge-demo');
+    const t = tag('chevp-badge');
+    el.innerHTML = `
+      <${t} variant="green">Active</${t}>
+      <${t} variant="orange">Pending</${t}>
+      <${t} variant="red">Critical</${t}>
+      <${t} variant="blue">Info</${t}>
+      <${t} variant="purple">New</${t}>
+    `;
+  }
+
+  function renderPanel() {
+    const el = document.getElementById('panel-demo');
+    const t = tag('chevp-panel');
+    el.innerHTML = `
+      <${t} heading="Tasks" icon="checklist" style="height:100%">
+        This is the panel body content. You can place any elements here.
+      </${t}>
+    `;
+  }
+
+  function renderStatCards() {
+    const el = document.getElementById('stat-card-demo');
+    const t = tag('chevp-stat-card');
+    el.innerHTML = `
+      <${t} label="Revenue" value="$48,200" trend="+12.5% from last month"></${t}>
+      <${t} label="Users" value="3,842" trend="+5.2% this week" color="var(--chevp-green)"></${t}>
+      <${t} label="Issues" value="17" trend="-3 from yesterday" color="var(--chevp-red)"></${t}>
+    `;
+  }
+
+  function renderProfileCards() {
+    const el = document.getElementById('profile-card-demo');
+    const tp = tag('chevp-profile-card');
+    const tb = tag('chevp-badge');
+    el.innerHTML = `
+      <${tp} name="Alice Chen" subtitle="Senior Engineer" color="var(--chevp-accent)">
+        <${tb} slot="tags" variant="blue">Frontend</${tb}>
+        <${tb} slot="tags" variant="green">Lead</${tb}>
+      </${tp}>
+      <${tp} name="Bob Miller" subtitle="Product Designer" color="var(--chevp-green)">
+        <${tb} slot="tags" variant="purple">Design</${tb}>
+      </${tp}>
+    `;
+  }
+
+  function renderDataTable() {
+    const el = document.getElementById('data-table-demo');
+    const t = tag('chevp-data-table');
+    el.innerHTML = `<${t}></${t}>`;
+    requestAnimationFrame(() => {
+      const table = el.querySelector(t);
+      if (table) {
+        table.setData(
+          [
+            { key: 'name', label: 'Name', width: '200px' },
+            { key: 'role', label: 'Role' },
+            { key: 'status', label: 'Status' },
+          ],
+          [
+            { name: 'Alice Chen', role: 'Engineer', status: 'Active' },
+            { name: 'Bob Miller', role: 'Designer', status: 'Active' },
+            { name: 'Carol White', role: 'PM', status: 'Away' },
+            { name: 'Dave Park', role: 'Engineer', status: 'Offline' },
+          ]
+        );
+      }
+    });
+  }
+
+  function renderTaskList() {
+    const el = document.getElementById('task-list-demo');
+    const t = tag('chevp-task-list');
+    el.innerHTML = `<${t}></${t}>`;
+    requestAnimationFrame(() => {
+      const list = el.querySelector(t);
+      if (list) {
+        list.setTasks([
+          { id: '1', text: 'Review PR #42', done: false, priority: 'high', due: 'Today' },
+          { id: '2', text: 'Write unit tests', done: false, priority: 'medium', due: 'Tomorrow' },
+          { id: '3', text: 'Update dependencies', done: true, priority: 'low' },
+          { id: '4', text: 'Deploy to staging', done: false, priority: 'high', due: 'Today' },
+        ]);
+      }
+    });
+  }
+
+  function renderTimeline() {
+    const el = document.getElementById('timeline-demo');
+    const tt = tag('chevp-timeline');
+    const ti = tag('chevp-timeline-item');
+    el.innerHTML = `
+      <${tt}>
+        <${ti} icon="check_circle" icon-bg="var(--chevp-green-bg)" icon-color="var(--chevp-green)" time="2 hours ago">
+          Deployment to production successful
+        </${ti}>
+        <${ti} icon="code" icon-bg="var(--chevp-blue-bg)" icon-color="var(--chevp-blue)" time="4 hours ago">
+          PR #42 merged into main
+        </${ti}>
+        <${ti} icon="bug_report" icon-bg="var(--chevp-red-bg)" icon-color="var(--chevp-red)" time="Yesterday">
+          Bug report filed: Login timeout
+        </${ti}>
+        <${ti} icon="person_add" icon-bg="var(--chevp-accent-bg)" icon-color="var(--chevp-accent-light)" time="2 days ago">
+          New team member: Carol White
+        </${ti}>
+      </${tt}>
+    `;
+  }
+
+  function renderSchedule() {
+    const el = document.getElementById('schedule-demo');
+    const t = tag('chevp-schedule');
+    el.innerHTML = `<${t}></${t}>`;
+    requestAnimationFrame(() => {
+      const schedule = el.querySelector(t);
+      if (schedule) {
+        schedule.setDays([
+          { label: 'Monday', slots: [
+            { time: '09:00', text: 'Daily Standup' },
+            { time: '11:00', text: 'Architecture Review' },
+            { time: '14:00', text: 'Code Review', muted: true },
+          ]},
+          { label: 'Tuesday', slots: [
+            { time: '10:00', text: 'Sprint Planning' },
+            { time: '15:00', text: '1:1 with Manager' },
+          ]},
+        ]);
+      }
+    });
+  }
+
+  function renderBarChart() {
+    const el = document.getElementById('bar-chart-demo');
+    const t = tag('chevp-bar-chart');
+    el.innerHTML = `<${t} height="180"></${t}>`;
+    requestAnimationFrame(() => {
+      const chart = el.querySelector(t);
+      if (chart) {
+        chart.setData([
+          { label: 'Mon', value: 45 },
+          { label: 'Tue', value: 72, highlight: true },
+          { label: 'Wed', value: 58 },
+          { label: 'Thu', value: 90, highlight: true },
+          { label: 'Fri', value: 64 },
+          { label: 'Sat', value: 30 },
+          { label: 'Sun', value: 22 },
+        ]);
+      }
+    });
+  }
+
+  function renderDocEditor() {
+    const el = document.getElementById('doc-editor-demo');
+    const t = tag('chevp-doc-editor');
+    el.innerHTML = `<${t} placeholder="Start writing..." style="height:100%"></${t}>`;
+    requestAnimationFrame(() => {
+      const editor = el.querySelector(t);
+      if (editor && editor.setContent) {
+        editor.setContent('<p>This is a <strong>rich text</strong> editor with formatting tools.</p><ul><li>Bold, italic</li><li>Ordered &amp; unordered lists</li><li>Undo / redo</li></ul>');
+      }
+    });
+  }
+
+  function renderWorkspace() {
+    const el = document.getElementById('workspace-demo');
+    const tw = tag('chevp-workspace');
+    const tp = tag('chevp-panel');
+    el.innerHTML = `
+      <${tw} layout="2col" style="height:100%">
+        <${tp} heading="Dashboard" icon="dashboard">
+          Left panel content
+        </${tp}>
+        <${tp} heading="Analytics" icon="analytics">
+          Right panel content
+        </${tp}>
+      </${tw}>
+    `;
+  }
+
+  // ── Initial render ──
+  renderAllDemos();
+</script>
+
+</body>
+</html>

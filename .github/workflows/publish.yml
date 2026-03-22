@@ -70,7 +70,7 @@ jobs:
       - name: Prepare Pages site
         run: |
           mkdir -p _site/docs _site/dist _site/node_modules
-          cp docs/*.html _site/docs/
+          cp -r docs/ _site/docs/
           cp -r dist/* _site/dist/
           cp -r node_modules/@material _site/node_modules/@material
           cp -r node_modules/lit _site/node_modules/lit
