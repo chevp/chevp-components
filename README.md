@@ -174,7 +174,7 @@ npm run test        # Run tests
 npm run clean       # Remove dist/
 ```
 
-Demo pages are available under [docs/demo-vanilla.html](docs/demo-vanilla.html) and [docs/demo-material.html](docs/demo-material.html).
+Demo page is available under [docs/demo.html](docs/demo.html).
 
 ## Architecture
 

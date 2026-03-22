@@ -81,7 +81,7 @@ jobs:
           cp -r node_modules/tslib _site/node_modules/tslib
           cat > _site/index.html << 'HTMLEOF'
           <!DOCTYPE html>
-          <html><head><meta http-equiv="refresh" content="0;url=docs/demo-material.html"></head></html>
+          <html><head><meta http-equiv="refresh" content="0;url=docs/demo.html"></head></html>
           HTMLEOF
 
       - uses: actions/configure-pages@v5
