@@ -27,7 +27,7 @@ let configured = false;
  *
  * @example
  * ```ts
- * import { configure } from '@chevp/components';
+ * import { configure } from '@chevp/web-components';
  *
  * await configure({ theme: 'material', mode: 'dark', palette: 'ocean' });
  * // Now use <chevp-panel>, <chevp-badge>, etc. everywhere

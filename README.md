@@ -1,4 +1,4 @@
-# @chevp/components
+# @chevp/web-components
 
 Reusable Vanilla Web Components for workspace-based business applications. Framework-agnostic, built on the Web Components standard with TypeScript and Shadow DOM encapsulation.
 
@@ -27,7 +27,7 @@ Use your GitHub username and a **Personal Access Token** (with `read:packages` s
 **3. Install:**
 
 ```bash
-npm install @chevp/components
+npm install @chevp/web-components
 ```
 
 ## Components
@@ -49,7 +49,7 @@ npm install @chevp/components
 ## Quick Start
 
 ```javascript
-import { lightTheme, paletteCobalt } from '@chevp/components';
+import { lightTheme, paletteCobalt } from '@chevp/web-components';
 
 // Apply theme globally
 document.adoptedStyleSheets = [lightTheme, paletteCobalt];
@@ -70,15 +70,15 @@ document.adoptedStyleSheets = [lightTheme, paletteCobalt];
 
 ```javascript
 // Full library
-import { ChevpPanel, ChevpWorkspace } from '@chevp/components';
+import { ChevpPanel, ChevpWorkspace } from '@chevp/web-components';
 
 // Tree-shakeable single imports
-import '@chevp/components/panel';
-import '@chevp/components/workspace';
+import '@chevp/web-components/panel';
+import '@chevp/web-components/workspace';
 
 // Material Design variants
-import { ChevpMdPanel } from '@chevp/components/md';
-import '@chevp/components/md/panel';
+import { ChevpMdPanel } from '@chevp/web-components/md';
+import '@chevp/web-components/md/panel';
 ```
 
 ## Theming
@@ -88,7 +88,7 @@ The design system uses CSS Custom Properties, composed from a **base theme** and
 ### Base Themes
 
 ```javascript
-import { lightTheme, darkTheme } from '@chevp/components';
+import { lightTheme, darkTheme } from '@chevp/web-components';
 document.adoptedStyleSheets = [darkTheme, paletteCobalt];
 ```
 

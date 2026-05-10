@@ -318,7 +318,7 @@ export const paletteNeon = sheet(`
  * All palettes as a lookup map for runtime selection.
  *
  * Usage:
- *   import { colorPalettes, lightTheme } from '@chevp/components';
+ *   import { colorPalettes, lightTheme } from '@chevp/web-components';
  *   const palette = colorPalettes[userPreference]; // e.g. 'ocean'
  *   document.adoptedStyleSheets = [lightTheme, palette];
  */

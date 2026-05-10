@@ -1,6 +1,6 @@
 {
-  "name": "@chevp/components",
-  "version": "0.1.0",
+  "name": "@chevp/web-components",
+  "version": "0.2.0",
   "description": "Reusable Vanilla Web Components for workspace-based business applications",
   "type": "module",
   "main": "dist/index.js",
